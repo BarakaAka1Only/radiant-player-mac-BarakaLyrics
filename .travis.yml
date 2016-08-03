@@ -1,0 +1,33 @@
+language: objective-c
+xcode_workspace: radiant-player-mac.xcworkspace
+xcode_scheme: Radiant Player
+osx_image: xcode7.1
+
+cache:
+  - bundler
+  - cocoapods
+
+before_script:
+  - mkdir -p ~/go
+  - mkdir -p ~/bin
+  - curl -sL -o ~/bin/gimme https://raw.githubusercontent.com/travis-ci/gimme/master/gimme
+  - chmod +x ~/bin/gimme
+  - eval "$(~/bin/gimme 1.5.2)"
+  - go get github.com/aktau/github-release
+
+after_success:
+  - PATH=$GOPATH/bin:$PATH ./scripts/release-app.sh
+  - ./scripts/build-website.sh && ./scripts/deploy-website.sh
+
+env:
+  global:
+    - GOPATH=~/go
+    - NOKOGIRI_USE_SYSTEM_LIBRARIES=true # speedup for html-proofer
+    - GITHUB_USER=radiant-player
+    - GITHUB_REPO=radiant-player-mac
+    - GITHUB_BOT_USER=radiant-bot
+    - GITHUB_BOT_EMAIL=jacobwgillespie+radiant-bot@gmail.com
+    # GITHUB_TOKEN=encrypted
+    - secure: "d+viN4YvcYgARAvknJO2ymZf95Yu/xulCCxTPYsrTucm4knqQHdsO9NyvG7DHhDkNRPxbYXOSJfB4UGv6ObCSquvSA43XzS2nUSnfHvHyio/mcbH//DbrRTpUH7ziGJqfzXuwOmxS0DLwi20QG9+4amTo5tilet9FiqP3xfITT+Nm1awpfqMOoqaXZdVmJh2bj1hyCT92WmEBhepz7VdsVcdpUphO2jLtnE4EHIcUeJ7Fw3A2aqRnVbWfcy25Bmsp/aOzGRBH1zArRnZjaCUPK7OX+tnq7TnSztL8qeQIBqtMKriq45x4hFE9JTJW3iO+hv8LQB6xyrfIvzCisz6Rcwhwb5oMkO9ykYoFZHSy5nuCSZvnpIISdWFobV58EYLwu0GuKB6iW0zOO4bJYje9qdvzhh/h1o2sXho77pFLcmURjll8HdRTLSY1Ha3LRFeoYGBHf9K7RW1YKhVkGDqKyahjzijZ5MIETWkTgg8VICvJF2DlWLxax/j1kmhH+MjTV1wGaEPXTmcnBuEU3cNsFhv1SIzNP+8q97tuNKeBOL5rd1nOHH4uuO1z+LXA0ulmk7E8glcDftVsaW7WhvOPdwYIj5GFMKI6RmUIjcifIH+CR+8pAlXeR5Ek8pAYDhKpJlHpAH/QX0JT9+mLqiWIuMN7RG4tPKadrEVgWJKdxQ="
+    # KEY_PASSWORD=encrypted
+    - secure: "drkqA6GFiKly3wayztgXlco4g1PAVX4LjowBHNyT8MYUHUBEMcSMsED+2MD2nmWKjuuGGi1jBMVgv7LiMrJmO8KTjAhE9PUjOXIZm/T3/m/yhzLXYs0FiMN7AtZ6MSSbd+kfks51oBuZJxdvM42Obwg7LQmJstMRY4Vlil9yXmuIrvVWDESU30+kWw81msuTYqpHw7D2JcBELz3dwaLV0P93H3l4Gr/opy/M8y+Aknxb9QBQYyx8jZA7mQHG4+N9VfhyzGlxncz8Bvr4jqSbQ6Dezwf7KV5Z6iGHHu2W67VTJY+LwGb0bG4p8hXlvJgwkoIwmC91RTDmY8VnktfTQsp0MJP+U41/aqf9xgLZmUVITEE5/3aDeAv7XtEsUL+tpT/2oVXXphHboLf60xYuiLFuYeIVhStergw/sY1xic/3wbScDxXp9Sosp0q6fc8QRdlfI9y0zLgl+CKig+NVI0Iq2rk+ufb5cWhGtFTY8x6bX1R2s5cUo7eUiVKp9xy9ElLdvSgi66BaMWL4uYY32ldVOxsI4sKEZUPpciexkg+D8RvxyO5G7y4t/35O7TUNHDq3nHbUs1H1Pmly9YZoFGFIrlo2XrgWyJQQniBwZlWkrVi+bfhPO44Go9PcXGgshBFWUKL6WlVCqQumDISENDJZRMpLV7JRo/fLqNuBhUw="

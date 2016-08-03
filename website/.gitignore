@@ -1,0 +1,12 @@
+# Xcode
+*.pbxproj
+*.xcuserstate
+
+# Jekyll
+_site
+.sass-cache
+.jekyll-metadata
+/tmp/
+
+# Releases
+/_data/releases.json

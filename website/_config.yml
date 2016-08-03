@@ -1,0 +1,29 @@
+# Site title
+title: Radiant Player for Mac
+
+# The subpath of your site, e.g. /blog
+baseurl: "/radiant-player-mac"
+
+# The base hostname & protocol for your site
+url: "https://radiant-player.github.io"
+
+# Set release notes permalinks
+defaults:
+  - scope:
+      path: ""
+      type: "posts"
+      category: "release"
+    values:
+      permalink: "/release-notes/:title.html"
+
+# Use GitHub flavored markdown
+kramdown:
+  input: GFM
+
+# Enable mentions
+mention-baseurl: https://github.com
+issue-mention-baseurl: https://github.com/radiant-player/radiant-player-mac/issues
+
+# Load releases from GitHub
+releases:
+  repository: radiant-player/radiant-player-mac
